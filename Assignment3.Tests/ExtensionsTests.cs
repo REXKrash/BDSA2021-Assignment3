@@ -52,5 +52,30 @@ namespace BDSA2020.Assignment03.Tests
             var expected = new int[] { -4, 0, 4, 1600, 2000 };
             Assert.Equal(expected, output);
         }
+
+        [Fact]
+        public void IsSecure_GivenTwoLinks_SecureAndNotSecure()
+        {
+
+            // Arrange and act
+            bool isSecure1 = new Uri("https://google.com").IsSecure();
+            bool isSecure2 = new Uri("http://google.com").IsSecure();
+
+            // Assert
+            Assert.Equal(true, isSecure1);
+            Assert.Equal(false, isSecure2);
+        }
+
+        [Fact]
+        public void WordCount_GivenWords_CorrectAmountOfWords()
+        {
+
+            // Arrange and act
+            var input = "Hello my name is 12[]!#¤% &/()=? @£$€{[]}| ÆØÅ";
+            int wordCount = input.WordCount();
+
+            // Assert
+            Assert.Equal(5, wordCount);
+        }
     }
 }
