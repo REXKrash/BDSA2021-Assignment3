@@ -8,9 +8,9 @@ namespace BDSA2020.Assignment03.Tests
     public class DelegatesTests
     {
         [Fact]
-        public void String_reverse_given_abc_returns_cba()
+        public void ReverseString_givenAbcdefgh_returnsHgfedcba()
         {
-            Action<string> reverse = str => Console.WriteLine(str.Reverse());
+            Action<string> reverse = str => Array.ForEach<char>(str.Reverse().ToArray(), (c => Console.Write(c)));
 
             var writer = new StringWriter();
             Console.SetOut(writer);
@@ -18,7 +18,7 @@ namespace BDSA2020.Assignment03.Tests
             reverse("abcdefgh");
             var output = writer.GetStringBuilder().ToString().Trim();
 
-            Assert.Equal("gfedcba", output);
+            Assert.Equal("hgfedcba", output);
         }
 
         [Fact]
