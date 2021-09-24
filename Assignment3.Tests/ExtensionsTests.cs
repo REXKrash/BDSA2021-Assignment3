@@ -1,14 +1,40 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 
-namespace BDSA2020.Assignment02.Tests
+namespace BDSA2020.Assignment03.Tests
 {
     public class ExtensionsTests
     {
         [Fact]
-        public void Test1()
-        {
+        public void Flatten_givenTwoLists_correctCombinedList() {
 
+            // Arrange
+            var list1 = new List<int>() {1,2,3};
+            var list2 = new List<int>() {4,5,6};
+
+            var superList = new List<int>[] {list1, list2};
+
+            // Act
+            var flatList = superList.Flatten();
+
+            // Assert
+            var expected = new List<int>() {1,2,3,4,5,6};
+            Assert.Equal(expected, flatList);
+        }
+
+        [Fact]
+        public void SelectDivisible_givenNumberArray_correctOutput() {
+
+            // Arrange
+            var input = new int[] {1,2,3,42,49,56};   
+
+            // Act
+            var output = input.SelectDivisible();
+
+            // Assert
+            var expected = new int[] {49,56};
+            Assert.Equal(expected, output);
         }
     }
 }
