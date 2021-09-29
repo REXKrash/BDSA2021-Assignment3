@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
 namespace BDSA2020.Assignment03
@@ -18,37 +19,12 @@ namespace BDSA2020.Assignment03
 
         public static int WordCount(this string str) => Regex.Split(str, @"\P{L}+").Length;
         
-        public static IReadOnlyCollection<string> WizardsByCreator(this Wizard wizard, string creator)
-        {
-            var wizards = wizard.Wizards.Value;
-            var wizardNames = from w in wizards
-                                              where w.Creator.Contains(creator)
-                                              select w.Name;
-            return wizardNames.ToList().AsReadOnly();
-        }
-        public static int YearOfWizardIntroduction(this Wizard wizard, string wizardName)
-        {
-            var wizards = wizard.Wizards.Value;
-            var introductionYear = from w in wizards
-                                                where w.Name.Contains(wizardName)
-                                                select w.Year;
-            return introductionYear.Min().Value;
-        }
-        public static IReadOnlyCollection<(string,int)> NameAndYearOfWizardFromMedium(this Wizard wizard, string medium)
-        {
-            var wizards = wizard.Wizards.Value;
-            var tuple = from w in wizards
-                where w.Medium.Contains(medium)
-                select (w.Name, w.Year.Value);
-            return tuple.ToList().AsReadOnly();
-        }
-        public static IReadOnlyCollection<string> WizardsNamesOrderedByCreator(this Wizard wizard)
-        {
-            var wizards = wizard.Wizards.Value;
-            var allWizards = from w in wizards
-                orderby w.Creator descending, w.Name
-                select w.Name;
-            return allWizards.ToList().AsReadOnly();
-        }
+        public static IReadOnlyCollection<string> WizardsByCreator(this Wizard wizard, string creator) => Wizard.Wizards.Value.Where(x => x.Creator.Equals(creator)).Select(x => x.Name).ToList().AsReadOnly();
+
+        public static int YearOfWizardIntroduction(this Wizard wizard, string wizardName) => Wizard.Wizards.Value.Where(x => x.Name.Contains(wizardName)).Select(x => x.Year).Min().Value;
+
+        public static IReadOnlyCollection<(string,int)> NameAndYearOfWizardFromMedium(this Wizard wizard, string medium) => Wizard.Wizards.Value.Where(x => x.Medium.Contains(medium)).Select(x => (x.Name, x.Year.Value)).ToList().AsReadOnly();
+        
+        public static IReadOnlyCollection<string> WizardsNamesOrderedByCreator(this Wizard wizard) => Wizard.Wizards.Value.OrderByDescending(x => x.Creator).OrderBy(x => x.Name).Select(x => x.Name).ToList().AsReadOnly();
     }
 }
