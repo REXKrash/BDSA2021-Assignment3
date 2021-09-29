@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using BDSA2020.Assignment03;
 
 namespace Assignment3
 {
@@ -6,6 +8,7 @@ namespace Assignment3
     {
         static void Main(string[] args)
         {
+            var wizard = Wizard.Wizards.Value.First();
             Console.WriteLine("Hello World!");
         }
     }
